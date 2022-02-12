@@ -112,10 +112,13 @@ label.radio input:checked+span {
                             <p class="about"><?php echo$data['description']; ?></p>
                             <div class="sizes mt-5">
                                 <h6 class="text-uppercase">Condition</h6>
-                                <form action="" method="Get">
+                                <form action="<?php echo url()?>/?action=buy" method="Get">
                                     <label>
                                         <span>Số lượng</span>
+                                        <input type="hidden" name="action" value="buy" min="1">
                                         <input type="number" name="quantity" value="1" min="1">
+                                        <input type="hidden" name="book_id" value="<?php echo $data['book_id']; ?>" min="1">
+                                        <input type="hidden" name="price" value="<?php echo $data['price']; ?>" min="1">
                                     </label>
                                     <div class="cart mt-4 align-items-center">
                                         <button type="Submit" class="btn btn-danger text-uppercase mr-2 px-4">Mua ngay

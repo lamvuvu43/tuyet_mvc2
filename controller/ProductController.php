@@ -5,6 +5,8 @@ class ProductController
     function __construct()
     {
         $action = isset($_GET['action']) ? $_GET['action'] : 'index';
+//        var_dump($_GET);
+//        die();
         if ($action == 'index')
             $this->index();
 
@@ -21,6 +23,8 @@ class ProductController
             $this->filter();
         if ($action == 'logout')
             $this->logout();
+        if ($action == 'buy')
+            $this->buy();
     }
 
     //cac action - public
@@ -66,8 +70,10 @@ class ProductController
         include 'view/product/list.php';
     }
 
-    function Buy(){
-        $sql = "insert into ";
+    function buy(){
+        $model = new ProductModel();
+        $model->order();
+        header("Location:index.php?controller=ProductController&action=detail&id=".$_GET['book_id']);
     }
 
     public function logout(){

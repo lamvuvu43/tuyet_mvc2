@@ -60,4 +60,16 @@ class ProductModel extends DbModel
         $sql = 'delete from book where book_id = ?';
         return $this->delete($sql, [$id]);
     }
+
+    public function order()
+    {
+        $sql = "INSERT INTO `order` (`order_id`, `email`, `order_date`, `consignee_name`,`consignee_add`,`consignee_phone`,`status`)
+        VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $order_id = rand(1, 50000);
+        $param = [$order_id, 'abcd@yahoo.com', date('Y-m-d H:i:s'), 'fasfa', 'fafas', 'fafaf', 1];
+        $order =  $this->store($sql, $param);
+        $sql1 = "insert into `order_detail` (`order_id`, `book_id`, `quantity`, `price`) values (?,?,?,?)";
+        $param1 = [$order_id, $_GET['book_id'], $_GET['quantity'], $_GET['price']];
+        $this->store($sql1, $param1);
+    }
 }
