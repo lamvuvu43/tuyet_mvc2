@@ -67,7 +67,7 @@ class ProductModel extends DbModel
         VALUES (?, ?, ?, ?, ?, ?, ?)";
         $order_id = rand(1, 50000);
         $param = [$order_id, 'abcd@yahoo.com', date('Y-m-d H:i:s'), 'fasfa', 'fafas', 'fafaf', 1];
-        $order =  $this->store($sql, $param);
+        $this->store($sql, $param);
         $sql1 = "insert into `order_detail` (`order_id`, `book_id`, `quantity`, `price`) values (?,?,?,?)";
         $param1 = [$order_id, $_GET['book_id'], $_GET['quantity'], $_GET['quantity'] * $_GET['price']];
         $this->store($sql1, $param1);
