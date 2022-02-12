@@ -4,7 +4,6 @@ class DbModel {
     public $pdo=null;
     function __construct()
     {
-        var_dump(10);
         $this->pdo= new PDO("mysql:host=". HOST .";dbname=".DATABASE, USER, PW);
         $this->pdo->query('set names utf8');
     }

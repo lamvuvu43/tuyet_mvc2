@@ -24,7 +24,7 @@
         <ul class="content-box-tabs">
             <li><a href="#tab1" class="default-tab">Danh mục sách</a></li>
             <!-- href must be unique and match the id of target div -->
-            <li><a href="#tab2">Thêm sách mới</a></li>
+            <li><a href="#tab2">Thêm user mới</a></li>
         </ul>
 
         <div class="clear"></div>
@@ -51,10 +51,10 @@
                 <tr>
                     <th>
                         <input class="check-all" type="checkbox"/></th>
-                    <th>Mã sách</th>
-                    <th>Tên</th>
-                    <th>Giá</th>
-                    <th>Hình ảnh</th>
+                    <th>Email</th>
+                    <th>Name</th>
+                    <th>Số điện thoại</th>
+                    <th>Địa chỉ</th>
                     <th>Chức năng</th>
                 </tr>
                 </thead>
@@ -87,21 +87,21 @@
 
                 <tbody>
                 <?php
-                foreach ($dataProduct as $v) {
+                foreach ($dataUser as $v) {
                     ?>
                     <tr>
                         <td class="align-middle"><input type="checkbox"/></td>
-                        <td><?php echo $v['book_id'] ?></td>
+                        <td><?php echo $v['email'] ?></td>
                         <td><a href="#" title="title">
-                                <?php echo $v['book_name'] ?>
+                                <?php echo $v['name'] ?>
                             </a></td>
-                        <td><?php echo $v['price'] ?></td>
-                        <td><img src='../image/book/<?php echo $v['img'] ?>' height=100></td>
+                        <td><?php echo $v['phone'] ?></td>
+                        <td><?php echo $v['address'] ?></td>
                         <td>
 
                             <!-- Icons -->
-                            <a href="<?php echo  url() ?>/admin/?action=detail&id=<?php echo $v['book_id']?>" title="Edit"><img src="resources/images/icons/pencil.png" alt="Edit"/></a>
-                            <a href="<?php echo  url() ?>/admin/?action=delete&id=<?php echo $v['book_id']?>" title="Delete"><img src="resources/images/icons/cross.png" alt="Delete"/></a>
+                            <a href="<?php echo  url() ?>/admin/user?action=detail&id=<?php echo $v['email']?>" title="Edit"><img src="resources/images/icons/pencil.png" alt="Edit"/></a>
+                            <a href="<?php echo  url() ?>/admin/user?action=delete&id=<?php echo $v['email']?>" title="Delete"><img src="resources/images/icons/cross.png" alt="Delete"/></a>
 
                         </td>
                     </tr>
@@ -118,60 +118,33 @@
         </div> <!-- End #tab1 -->
 
         <div class="tab-content" id="tab2">
-
-            <form action="<?php echo  url() ?>/admin/?action=store" method="POST" enctype="multipart/form-data">
+                <?php var_dump( url()) ?>
+            <form action="<?php echo  url() ;?>/admin/user/?action=store" method="POST">
 
                 <fieldset>
                     <!-- Set class to "column-left" or "column-right" on fieldsets to divide the form into columns -->
                     <p>
-                        <label>Ma sach</label>
-                        <input class="text-input large-input" type="text" id="large-input" name="book_id"/>
+                        <label>Email</label>
+                        <input class="text-input large-input" type="email" id="large-input" name="email"/>
                     </p>
 
                     <p>
-                        <label>Ten sach</label>
-                        <input class="text-input large-input" type="text" id="large-input" name="book_name"/>
-                    </p>
-                    <p>
-                        <label>Gia</label>
-                        <input class="text-input large-input" type="number" id="large-input" name="price"/>
-                    </p>
-                    <p>
-                        <label>Hinh</label>
-                        <input class="text-input large-input" type="file" id="large-input" name="img"/>
+                        <label>Mật khẩu</label>
+                        <input class="text-input large-input" type="password" id="large-input" name="password"/>
                     </p>
 
                     <p>
-                        <label>Loai</label>
-                        <select name="cat_id" class="small-input">
-                            <?php
-                            foreach ($dataCat as $r) {
-                                ?>
-                                <option value="<?php echo $r['cat_id'] ?>"><?php echo $r['cat_name'] ?></option>
-                                <?php
-                            }
-                            ?>
-                        </select>
+                        <label>Tên</label>
+                        <input class="text-input large-input" type="text" id="large-input" name="name"/>
                     </p>
                     <p>
-                        <label>Nha xb</label>
-                        <select name="pub_id" class="large-input">
-                            <?php
-                            foreach ($dataPub as $r) {
-                                ?>
-                                <option value="<?php echo $r['pub_id'] ?>"><?php echo $r['pub_name'] ?></option>
-                                <?php
-                            }
-                            ?>
-                        </select>
+                        <label>Địa chỉ</label>
+                        <input class="text-input large-input" type="text" id="large-input" name="address"/>
                     </p>
-
                     <p>
-                        <label>Mo ta</label>
-                        <textarea class="text-input textarea wysiwyg" id="textarea" name="description" cols="79"
-                                  rows="15"></textarea>
+                        <label>Số điện thoại</label>
+                        <input class="text-input large-input" type="text" id="large-input" name="phone"/>
                     </p>
-
                     <p>
                         <input class="button" type="submit" value="Submit"/>
                     </p>

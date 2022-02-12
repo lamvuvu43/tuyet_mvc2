@@ -1,12 +1,12 @@
 <?php
 
-class ProductController
+class UserController
 {
     private $model;
 
     function __construct()
     {
-        $this->model = new ProductModel();
+        $this->model = new UserModel();
         $action = isset($_GET['action']) ? $_GET['action'] : 'index';
         if ($action == 'index')
             $this->index();
@@ -24,6 +24,9 @@ class ProductController
         if ($action == 'delete') {
             $this->deleleBook();
         }
+        if($action == 'login'){
+            $this->login();
+        }
     }
 
     function dd($result)
@@ -36,19 +39,15 @@ class ProductController
     //cac action - public
     function index()
     {
-        $this->model = new ProductModel();
-        $dataProduct = $this->model->all();
-        //$this->dd($dataProduct);
-
-        $dataCat = $this->model->Category();
-        $dataPub = $this->model->Publisher();
-        include './view/template.php';
+        $this->model = new UserModel();
+        $dataUser = $this->model->all();
+        include '../view/template.php';
     }
 
     function list()
     {
         echo 'Noi dung action list';
-        $this->model = new ProductModel();
+        $this->model = new UserModel();
         $dataProduct = $this->model->all();
 
         //send dataProduct cho view/prodcut/list
@@ -70,7 +69,7 @@ class ProductController
         //lay thong tin chi tiet cua sach co id...
         //loadView tuong ung
         $id = $_GET['id'];
-        $m = new ProductModel();
+        $m = new UserModel();
         $data = $m->detail($id);
         // print_r($data);
         include './view/product/detail.php';
@@ -79,7 +78,7 @@ class ProductController
     function filter()
     {
         $q = isset($_GET['q']) ? $_GET['q'] : '';
-        $this->model = new ProductModel();
+        $this->model = new UserModel();
         $dataProduct = $this->model->filter($q);
 
         //send dataProduct cho view/prodcut/list
@@ -88,11 +87,13 @@ class ProductController
 
     function store()
     {
-//         print_r($_POST);
-//        print_r($_FILES['img']);
-
         $this->model->save();
-        header('location:index.php?controller=ProductController');
+        if(isset($_POST['from'])){
+            $this->login();
+        }else{
+            header('location:index.php?controller=UserController');
+        }
+
     }
 
     public function deleleBook()
@@ -100,5 +101,20 @@ class ProductController
         $id = isset($_GET['id']) ? $_GET['id'] : '';
         $this->model->deleteBook($id);
         header('location:index.php?controller=ProductController');
+    }
+
+    public function login()
+    {
+        session_start([
+            'cookie_lifetime' => 86400,
+        ]);
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        $user = $this->model->selectUser($email, $password);
+        if (!empty($user)) {
+            $_SESSION['login.email'] = $user[0]['email'];
+            $_SESSION['login.name'] = $user[0]['name'];
+        }
+        header("Location:". url());
     }
 }

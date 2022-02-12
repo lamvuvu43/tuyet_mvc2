@@ -1,41 +1,45 @@
 <?php
-class ProductController {
+
+class ProductController
+{
     function __construct()
     {
-        $action=isset($_GET['action'])?$_GET['action']:'index';
-        echo "action= $action";
-        if ($action=='index')
+        $action = isset($_GET['action']) ? $_GET['action'] : 'index';
+        if ($action == 'index')
             $this->index();
 
-        if ($action=='list')
+        if ($action == 'list')
             $this->list();
 
-        if ($action=='byCat')
+        if ($action == 'byCat')
             $this->byCat();
 
-        if ($action=='detail')
+        if ($action == 'detail')
             $this->detail();
 
-        if ($action=='filter')
+        if ($action == 'filter')
             $this->filter();
+        if ($action == 'logout')
+            $this->logout();
     }
+
     //cac action - public
     function index()
     {
         $model = new ProductModel();
-        $data = $model -> random(4);
-        include('./view/index.php');
+        $data = $model->random(4);
+        include('./theme/index.php');
     }
 
     function list()
     {
         echo 'Noi dung action list';
         $model = new ProductModel();
-        $dataProduct= $model->all();
+        $dataProduct = $model->all();
 
         //send dataProduct cho view/prodcut/list
         include 'view/product/list.php';
-      //  print_r($dataProduct);
+        //  print_r($dataProduct);
 
     }
 
@@ -46,25 +50,30 @@ class ProductController {
 
     function detail()
     {
-        //echo "Detail...";
-        //lay id
-        //load Model
-        //lay thong tin chi tiet cua sach co id...
-        //loadView tuong ung
         $id = $_GET['id'];
-        $m = new ProductModel();
-        $data=$m->detail($id);
-       // print_r($data);
-       include './view/product/detail.php';
+        $model = new ProductModel();
+        $data = $model->detail($id);
+        include('./theme/detail.php');
     }
 
     function filter()
     {
-        $q = isset($_GET['q'])?$_GET['q']:'';
+        $q = isset($_GET['q']) ? $_GET['q'] : '';
         $model = new ProductModel();
-        $dataProduct= $model->filter($q);
+        $dataProduct = $model->filter($q);
 
         //send dataProduct cho view/prodcut/list
         include 'view/product/list.php';
+    }
+
+    function Buy(){
+        $sql = "insert into ";
+    }
+
+    public function logout(){
+        session_start();
+        $_SESSION['login.email'] =  null;
+        $_SESSION['login.name'] =  null;
+        header("Location:". url());
     }
 }

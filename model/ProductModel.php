@@ -1,5 +1,5 @@
-<?php 
-class ProductModel extends DbModel 
+<?php
+class ProductModel extends DbModel
 {
     function all()
     {
@@ -53,5 +53,11 @@ class ProductModel extends DbModel
      $this->store($sql, $param);
 
      move_uploaded_file($_FILES['img']['tmp_name'], "../image/book/$img");
+    }
+
+    public function deleteBook($id)
+    {
+        $sql = 'delete from book where book_id = ?';
+        return $this->delete($sql, [$id]);
     }
 }

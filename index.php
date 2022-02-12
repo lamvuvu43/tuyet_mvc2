@@ -14,17 +14,20 @@ function loadClass($c)
     }
 }
 
-function dd($result)
-{
-    echo '<pre>';
-    print_r($result);
-    die();
+function url(){
+    if(isset($_SERVER['HTTPS'])){
+        $protocol = ($_SERVER['HTTPS'] && $_SERVER['HTTPS'] != "off") ? "https" : "http";
+    }
+    else{
+        $protocol = 'http';
+    }
+    return $protocol . "://" . $_SERVER['HTTP_HOST'];
 }
 
-
 spl_autoload_register('loadClass');
+spl_autoload_register('url');
 
-$controller = isset($_GET['controller'])?$_GET['controller']:'ProductController';
+$controller = isset($_GET['controller'])?$_GET['controller']: 'ProductController';
 
 // $pw ='123456';
 // $s1='!2)&';

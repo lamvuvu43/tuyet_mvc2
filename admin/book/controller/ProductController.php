@@ -42,7 +42,8 @@ class ProductController
 
         $dataCat = $this->model->Category();
         $dataPub = $this->model->Publisher();
-        include './view/template.php';
+//        die(dirname(__FILE__));
+        include '../view/template.php';
     }
 
     function list()
