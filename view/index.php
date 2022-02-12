@@ -1,0 +1,1 @@
+view index-  hien thi data cho ProductController/action index
